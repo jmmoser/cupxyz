@@ -1,0 +1,13 @@
+#!/bin/bash
+# SOURCE: https://github.com/teaxyz/setup/blob/a03db93763517b724d17031617f7aa656e89c4af/install.sh#L321
+if test -z "$SHELL"; then
+	if command -v finger >/dev/null 2>&1; then
+		SHELL="$(finger "$USER" | grep Shell | cut -d: -f3 | tr -d ' ')"
+	elif command -v getent >/dev/null 2>&1; then
+		SHELL="$(basename "$(getent passwd "$USER")")"
+	fi
+	if test -z "$SHELL"; then
+		# well dang
+		SHELL="unknown"
+	fi
+fi
